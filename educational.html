@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Frijole&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebra Game</title>
+    <style>
+        body {
+            background-color: black;
+            background-image: url('title.png');
+            background-size: 1000px;
+            background-position: top;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+        }
+        input {
+            background-color: black;
+            color: white;
+            font-size: 18px;
+            padding: 5px 10px;
+            margin-top: 10px;
+            display: none;
+        }
+        .button-container {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+#reset {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-family: 'Frijole', cursive;
+    color: white; /* Main text color */
+    text-shadow: 3px 3px 0px black, 
+                 -3px -3px 0px black, 
+                 3px -3px 0px black, 
+                 -3px 3px 0px black;
+                 display: none;
+}
+button {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-family: 'Frijole', cursive;
+    color: white; /* Main text color */
+    text-shadow: 3px 3px 0px black, 
+                 -3px -3px 0px black, 
+                 3px -3px 0px black, 
+                 -3px 3px 0px black;
+}
+#Easy, #Medium, #Hard {
+    font-family: 'Frijole', cursive;
+    font-size: 40px;
+}
+
+        #submit {
+            display: none;
+        }
+
+        #result, #Query {
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            font-size: 50px;
+            color: rgb(123, 123, 123);
+        }
+        #Query {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Frijole', cursive;
+    color: white; /* Adjust text color */
+    text-shadow: 3px 3px 0px black, 
+                 -3px -3px 0px black, 
+                 3px -3px 0px black, 
+                 -3px 3px 0px black;
+        }
+        #points {
+            text-align: left;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Frijole', cursive;
+    color: white; /* Adjust text color */
+    text-shadow: 3px 3px 0px black, 
+                 -3px -3px 0px black, 
+                 3px -3px 0px black, 
+                 -3px 3px 0px black;
+                 display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="Query"></div>
+    <div id="result"></div>
+    <div id="points"><span>Points:  </span>0</div>
+    <input type="number" id="answer" placeholder="Your answer">
+    <button id="submit">Submit</button>
+    <button id="reset">Reset Game</button>
+    <button id="next" style="display: none;">Next</button>
+
+    <div class="button-container">
+        <button id="Easy">Start game (Easy)</button>
+        <button id="Medium">Start game (Medium)</button>
+        <button id="Hard">Start game (Hard)</button>
+    </div>
+    
+    <script>
+        var current = 0;
+        var correctAnswer = 0;
+        var points = 0;
+        function answer() {
+            var randomNumber = Math.floor(Math.random() * 33) + 1;
+if (randomNumber == 1) {
+    document.getElementById('Query').innerText = "Solve: x + 3 = 5";
+    correctAnswer = 2;
+} else if (randomNumber == 2) {
+    document.getElementById('Query').innerText = "Solve: x - 2 = 3";
+    correctAnswer = 5;
+} else if (randomNumber == 3) {
+    document.getElementById('Query').innerText = "Solve: 2x = 6";
+    correctAnswer = 3;
+} else if (randomNumber == 4) {
+    document.getElementById('Query').innerText = "Solve: x + 4 = 10";
+    correctAnswer = 6;
+} else if (randomNumber == 5) {
+    document.getElementById('Query').innerText = "Solve: x - 5 = 2";
+    correctAnswer = 7;
+} else if (randomNumber == 6) {
+    document.getElementById('Query').innerText = "Solve: x / 2 = 4";
+    correctAnswer = 8;
+} else if (randomNumber == 7) {
+    document.getElementById('Query').innerText = "Solve: 3 + x = 7";
+    correctAnswer = 4;
+} else if (randomNumber == 8) {
+    document.getElementById('Query').innerText = "Solve: x - 1 = 9";
+    correctAnswer = 10;
+} else if (randomNumber == 9) {
+    document.getElementById('Query').innerText = "Solve: x + 2 = 8";
+    correctAnswer = 6;
+} else if (randomNumber == 10) {
+    document.getElementById('Query').innerText = "Solve: x / 5 = 2";
+    correctAnswer = 10;
+} else if (randomNumber == 11) {
+    document.getElementById('Query').innerText = "Solve: 5x = 25";
+    correctAnswer = 5;
+} else if (randomNumber == 12) {
+    document.getElementById('Query').innerText = "Solve: x + 7 = 12";
+    correctAnswer = 5;
+} else if (randomNumber == 13) {
+    document.getElementById('Query').innerText = "Solve: x - 4 = 6";
+    correctAnswer = 10;
+} else if (randomNumber == 14) {
+    document.getElementById('Query').innerText = "Solve: 3x = 15";
+    correctAnswer = 5;
+} else if (randomNumber == 15) {
+    document.getElementById('Query').innerText = "Solve: x / 4 = 3";
+    correctAnswer = 12;
+} else if (randomNumber == 16) {
+    document.getElementById('Query').innerText = "Solve: x + 10 = 20";
+    correctAnswer = 10;
+} else if (randomNumber == 17) {
+    document.getElementById('Query').innerText = "Solve: 6x = 18";
+    correctAnswer = 3;
+} else if (randomNumber == 18) {
+    document.getElementById('Query').innerText = "Solve: x - 8 = 4";
+    correctAnswer = 12;
+} else if (randomNumber == 19) {
+    document.getElementById('Query').innerText = "Solve: x / 7 = 3";
+    correctAnswer = 21;
+} else if (randomNumber == 20) {
+    document.getElementById('Query').innerText = "Solve: 2x + 5 = 15";
+    correctAnswer = 5;
+} else if (randomNumber == 21) {
+    document.getElementById('Query').innerText = "Solve: 4x = 16";
+    correctAnswer = 4;
+} else if (randomNumber == 22) {
+    document.getElementById('Query').innerText = "Solve: x - 15 = 5";
+    correctAnswer = 20;
+} else if (randomNumber == 23) {
+    document.getElementById('Query').innerText = "Solve: x / 3 = 7";
+    correctAnswer = 21;
+} else if (randomNumber == 24) {
+    document.getElementById('Query').innerText = "Solve: 9 + x = 18";
+    correctAnswer = 9;
+} else if (randomNumber == 25) {
+    document.getElementById('Query').innerText = "Solve: 7x = 42";
+    correctAnswer = 6;
+} else if (randomNumber == 26) {
+    document.getElementById('Query').innerText = "Solve: x + 14 = 30";
+    correctAnswer = 16;
+} else if (randomNumber == 27) {
+    document.getElementById('Query').innerText = "Solve: x - 9 = 3";
+    correctAnswer = 12;
+} else if (randomNumber == 28) {
+    document.getElementById('Query').innerText = "Solve: 5x + 5 = 30";
+    correctAnswer = 5;
+} else if (randomNumber == 29) {
+    document.getElementById('Query').innerText = "Solve: 8x = 64";
+    correctAnswer = 8;
+} else if (randomNumber == 30) {
+    document.getElementById('Query').innerText = "Solve: x / 6 = 2";
+    correctAnswer = 12;
+} else if (randomNumber == 31) {
+    document.getElementById('Query').innerText = "Solve: 3x - 9 = 0";
+    correctAnswer = 3;
+} else if (randomNumber == 32) {
+    document.getElementById('Query').innerText = "Solve: x + 5 = 17";
+    correctAnswer = 12;
+} else if (randomNumber == 33) {
+    document.getElementById('Query').innerText = "Solve: 2x + 8 = 18";
+    correctAnswer = 5;
+}
+
+        }
+        function answer1() {
+            var randomNumber = Math.floor(Math.random() * 33) + 1;
+
+    if (randomNumber == 1) {
+        document.getElementById('Query').innerText = "Solve: 2x + 5 = 17";
+        correctAnswer = 6;
+    } else if (randomNumber == 2) {
+        document.getElementById('Query').innerText = "Solve: 3x - 7 = 20";
+        correctAnswer = 9;
+    } else if (randomNumber == 3) {
+        document.getElementById('Query').innerText = "Solve: 4x + 3 = 27";
+        correctAnswer = 6;
+    } else if (randomNumber == 4) {
+        document.getElementById('Query').innerText = "Solve: 5x - 2 = 3x + 10";
+        correctAnswer = 6;
+    } else if (randomNumber == 5) {
+        document.getElementById('Query').innerText = "Solve: 2(x + 4) = 18";
+        correctAnswer = 5;
+    } else if (randomNumber == 6) {
+        document.getElementById('Query').innerText = "Solve: 3(x - 2) = 15";
+        correctAnswer = 7;
+    } else if (randomNumber == 7) {
+        document.getElementById('Query').innerText = "Solve: 7x + 4 = 25";
+        correctAnswer = 3;
+    } else if (randomNumber == 8) {
+        document.getElementById('Query').innerText = "Solve: 5(x - 3) = 20";
+        correctAnswer = 7;
+    } else if (randomNumber == 9) {
+        document.getElementById('Query').innerText = "Solve: 2x + 6 = 5x - 9";
+        correctAnswer = 5;
+    } else if (randomNumber == 10) {
+        document.getElementById('Query').innerText = "Solve: (x + 3) / 2 = 4";
+        correctAnswer = 5;
+    } else if (randomNumber == 11) {
+        document.getElementById('Query').innerText = "Solve: 4x - 7 = 2x + 5";
+        correctAnswer = 6;
+    } else if (randomNumber == 12) {
+        document.getElementById('Query').innerText = "Solve: 8x + 3 = 4x + 19";
+        correctAnswer = 4;
+    } else if (randomNumber == 13) {
+        document.getElementById('Query').innerText = "Solve: 3(x + 5) = 2x + 18";
+        correctAnswer = 3;
+    } else if (randomNumber == 14) {
+        document.getElementById('Query').innerText = "Solve: (x - 2) / 3 = 4";
+        correctAnswer = 14;
+    } else if (randomNumber == 15) {
+        document.getElementById('Query').innerText = "Solve: 6x - 3 = 2x + 21";
+        correctAnswer = 6;
+    } else if (randomNumber == 16) {
+        document.getElementById('Query').innerText = "Solve: (x + 4) / 2 = 7";
+        correctAnswer = 10;
+    } else if (randomNumber == 17) {
+        document.getElementById('Query').innerText = "Solve: 5x + 12 = 2x + 27";
+        correctAnswer = 5;
+    } else if (randomNumber == 18) {
+        document.getElementById('Query').innerText = "Solve: 3x - 2 = 2x + 8";
+        correctAnswer = 10;
+    } else if (randomNumber == 19) {
+        document.getElementById('Query').innerText = "Solve: 9x + 5 = 50";
+        correctAnswer = 5;
+    } else if (randomNumber == 20) {
+        document.getElementById('Query').innerText = "Solve: 4(x - 2) = 3x + 10";
+        correctAnswer = 18;
+    } else if (randomNumber == 21) {
+        document.getElementById('Query').innerText = "Solve: 2x + 7 = 4x - 5";
+        correctAnswer = 6;
+    } else if (randomNumber == 22) {
+        document.getElementById('Query').innerText = "Solve: (x - 3) / 5 = 2";
+        correctAnswer = 13;
+    } else if (randomNumber == 23) {
+        document.getElementById('Query').innerText = "Solve: 7x + 2 = 4x + 17";
+        correctAnswer = 5;
+    } else if (randomNumber == 24) {
+        document.getElementById('Query').innerText = "Solve: 10 - 3x = 4";
+        correctAnswer = 2;
+    } else if (randomNumber == 25) {
+        document.getElementById('Query').innerText = "Solve: 6x - 3 = 3x + 12";
+        correctAnswer = 5;
+    } else if (randomNumber == 26) {
+        document.getElementById('Query').innerText = "Solve: 2(x + 5) = 4x - 6";
+        correctAnswer = 8;
+    } else if (randomNumber == 27) {
+        document.getElementById('Query').innerText = "Solve: 3x + 7 = 2x + 13";
+        correctAnswer = 6;
+    } else if (randomNumber == 28) {
+        document.getElementById('Query').innerText = "Solve: (x + 5) / 4 = 6";
+        correctAnswer = 19;
+    } else if (randomNumber == 29) {
+        document.getElementById('Query').innerText = "Solve: 8x - 4 = 4x + 16";
+        correctAnswer = 5;
+    } else if (randomNumber == 30) {
+        document.getElementById('Query').innerText = "Solve: 2(x - 1) = 3x - 7";
+        correctAnswer = 5;
+    } else if (randomNumber == 31) {
+        document.getElementById('Query').innerText = "Solve: (x - 4) / 3 = 5";
+        correctAnswer = 19;
+    } else if (randomNumber == 32) {
+        document.getElementById('Query').innerText = "Solve: 5x + 3 = 2x + 18";
+        correctAnswer = 5;
+    } else if (randomNumber == 33) {
+        document.getElementById('Query').innerText = "Solve: (x + 7) / 3 = 9";
+        correctAnswer = 20;
+    }
+
+        }
+        function answer2() {
+            var randomNumber = Math.floor(Math.random() * 33) + 1;
+
+if (randomNumber == 1) {
+    document.getElementById('Query').innerText = "Solve: 3x + 7 = 2(x + 10)";
+    correctAnswer = 13;
+    console.log(correctAnswer)
+} else if (randomNumber == 2) {
+    document.getElementById('Query').innerText = "Solve: 4(x - 3) = 2x + 10";
+    correctAnswer = 11;
+    console.log(correctAnswer)
+} else if (randomNumber == 3) {
+    document.getElementById('Query').innerText = "Solve: (2x - 5) / 3 = (x + 2) / 4";
+    correctAnswer = 23;
+    console.log(correctAnswer)
+} else if (randomNumber == 4) {
+    document.getElementById('Query').innerText = "Solve: 5x - 3 = 3(x + 7)";
+    correctAnswer = 12;
+    console.log(correctAnswer)
+} else if (randomNumber == 5) {
+    document.getElementById('Query').innerText = "Solve: 2(x + 4) - 3(x - 5) = x + 7";
+    correctAnswer = 18;
+    console.log(correctAnswer)
+} else if (randomNumber == 6) {
+    document.getElementById('Query').innerText = "Solve: 6x + 5 = 2x + 4x + 15";
+    correctAnswer = 10;
+    console.log(correctAnswer)
+} else if (randomNumber == 7) {
+    document.getElementById('Query').innerText = "Solve: (x + 5) / 2 = (3x - 1) / 4";
+    correctAnswer = 3;
+    console.log(correctAnswer)
+} else if (randomNumber == 8) {
+    document.getElementById('Query').innerText = "Solve: 3(x - 2) + 2(x + 4) = 2x + 14";
+    correctAnswer = 6;
+    console.log(correctAnswer)
+} else if (randomNumber == 9) {
+    document.getElementById('Query').innerText = "Solve: 4(x - 1) - 2(2x - 3) = 5";
+    correctAnswer = 6;
+    console.log(correctAnswer)
+} else if (randomNumber == 10) {
+    document.getElementById('Query').innerText = "Solve: (x + 3) / 5 = (2x - 1) / 7";
+    correctAnswer = 11;
+    console.log(correctAnswer)
+} else if (randomNumber == 11) {
+    document.getElementById('Query').innerText = "Solve: 7(x - 3) = 4x + 9";
+    correctAnswer = 6;
+    console.log(correctAnswer)
+} else if (randomNumber == 12) {
+    document.getElementById('Query').innerText = "Solve: (x + 2) / 4 = (2x - 3) / 6";
+    correctAnswer = 8;
+    console.log(correctAnswer)
+} else if (randomNumber == 13) {
+    document.getElementById('Query').innerText = "Solve: 5(x - 2) + 3(x + 4) = 6x + 10";
+    correctAnswer = 9;
+    console.log(correctAnswer)
+} else if (randomNumber == 14) {
+    document.getElementById('Query').innerText = "Solve: 2(x - 5) - (3x + 4) = x - 12";
+    correctAnswer = 7;
+    console.log(correctAnswer)
+} else if (randomNumber == 15) {
+    document.getElementById('Query').innerText = "Solve: (3x + 5) / 2 = (x + 9) / 4";
+    correctAnswer = 1;
+    console.log(correctAnswer)
+} else if (randomNumber == 16) {
+    document.getElementById('Query').innerText = "Solve: 4(x - 3) + 2(x + 5) = 3(2x - 1)";
+    correctAnswer = 7;
+    console.log(correctAnswer)
+} else if (randomNumber == 17) {
+    document.getElementById('Query').innerText = "Solve: 5(x + 4) - 2(x - 3) = 4x + 18";
+    correctAnswer = 2;
+    console.log(correctAnswer)
+} else if (randomNumber == 18) {
+    document.getElementById('Query').innerText = "Solve: 3(x - 7) + 2(x + 5) = 4x - 3";
+    correctAnswer = 4;
+    console.log(correctAnswer)
+} else if (randomNumber == 19) {
+    document.getElementById('Query').innerText = "Solve: (2x - 3) / 5 = (x + 1) / 4";
+    correctAnswer = 19;
+    console.log(correctAnswer)
+} else if (randomNumber == 20) {
+    document.getElementById('Query').innerText = "Solve: 6(x - 2) - 4(x + 3) = 5x + 7";
+    correctAnswer = 5;
+    console.log(correctAnswer)
+} else if (randomNumber == 21) {
+    document.getElementById('Query').innerText = "Solve: (4x + 3) / 6 = (2x - 1) / 4";
+    correctAnswer = 9;
+    console.log(correctAnswer)
+} else if (randomNumber == 22) {
+    document.getElementById('Query').innerText = "Solve: 2(3x - 4) - (4x + 5) = x + 1";
+    correctAnswer = 10;
+    console.log(correctAnswer)
+} else if (randomNumber == 23) {
+    document.getElementById('Query').innerText = "Solve: 5(x - 2) - 3(x + 4) = 2(x - 1)";
+    correctAnswer = 6;
+    console.log(correctAnswer)
+
+} else if (randomNumber == 24) {
+    document.getElementById('Query').innerText = "Solve: 4(x + 3) - 2(2x - 1) = 3x + 8";
+    correctAnswer = 5;
+    console.log(correctAnswer)
+} else if (randomNumber == 25) {
+    document.getElementById('Query').innerText = "Solve: (2x - 5) / 3 = (x + 4) / 5";
+    correctAnswer = 11;
+    console.log(correctAnswer)
+} else if (randomNumber == 26) {
+    document.getElementById('Query').innerText = "Solve: 3(x + 4) - 2(x - 3) = 5x + 1";
+    correctAnswer = 7;
+    console.log(correctAnswer)
+} else if (randomNumber == 27) {
+    document.getElementById('Query').innerText = "Solve: (4x + 3) / 5 = (3x - 2) / 4";
+    correctAnswer = 14;
+    console.log(correctAnswer)
+} else if (randomNumber == 28) {
+    document.getElementById('Query').innerText = "Solve: 2(x - 5) + 3(x + 4) = 4x + 7";
+    correctAnswer = 8;
+    console.log(correctAnswer)
+} else if (randomNumber == 29) {
+    document.getElementById('Query').innerText = "Solve: 6(x - 3) - 2(x + 1) = 3x + 4";
+    correctAnswer = 7;
+    console.log(correctAnswer)
+} else if (randomNumber == 30) {
+    document.getElementById('Query').innerText = "Solve: (5x + 7) / 4 = (2x - 3) / 3";
+    correctAnswer = 13;
+    console.log(correctAnswer)
+} else if (randomNumber == 31) {
+    document.getElementById('Query').innerText = "Solve: 4(x + 2) - 3(x - 5) = 2x + 12";
+    correctAnswer = 9;
+    console.log(correctAnswer)
+} else if (randomNumber == 32) {
+    document.getElementById('Query').innerText = "Solve: (3x - 5) / 6 = (x + 2) / 4";
+    correctAnswer = 10;
+    console.log(correctAnswer)
+} else if (randomNumber == 33) {
+    document.getElementById('Query').innerText = "Solve: 2(4x - 3) - (5x + 4) = x + 6";
+    correctAnswer = 5;
+    console.log(correctAnswer)
+}
+
+        }
+
+        document.getElementById('submit').addEventListener('click', function() {
+            var userAnswer = parseInt(document.getElementById('answer').value);
+            if (userAnswer === correctAnswer) {
+                document.body.style.backgroundImage = "url('Door1.png')";
+                document.getElementById('result').innerText = "Correct!";
+                document.getElementById('submit').style.display = 'none';
+                document.getElementById('next').style.display = 'block';
+                points += 1;
+                document.querySelector('#points').lastChild.nodeValue = ' ' + points;
+
+                current += 1;
+                if (current == 33) {
+                    resetgame()
+                }
+            } else {
+                document.getElementById('result').innerText = "Try again!";
+               resetgame()
+            }
+        });
+
+        document.getElementById('next').addEventListener('click', function() {
+            document.body.style.backgroundImage = "url('Door.webp')";
+            document.body.style.backgroundSize = '700px';
+            document.getElementById('result').innerText = "";
+            document.getElementById('answer').value = "";
+            document.getElementById('submit').style.display = 'block';
+            document.getElementById('next').style.display = 'none';
+            answer();
+        });
+
+        document.getElementById('Easy').addEventListener('click', function() {
+            answer(); // Start the game with a question
+            document.body.style.backgroundSize = '700px';
+            document.body.style.backgroundImage = "url('Door.webp')";
+            document.getElementById('Easy').style.display = 'none';
+            document.getElementById('Medium').style.display = 'none';
+            document.getElementById('Hard').style.display = 'none';
+            document.getElementById('points').style.display = 'block';
+            document.getElementById('Query').style.display = 'block';
+            document.getElementById('submit').style.display = 'block';
+            document.getElementById('answer').style.display = 'block';
+        });
+        document.getElementById('Medium').addEventListener('click', function() {
+            answer1(); // Start the game with a question
+            document.body.style.backgroundSize = '700px';
+            document.body.style.backgroundImage = "url('Door.webp')";
+            document.getElementById('Easy').style.display = 'none';
+            document.getElementById('Medium').style.display = 'none';
+            document.getElementById('Hard').style.display = 'none';
+            document.getElementById('Query').style.display = 'block';
+            document.getElementById('points').style.display = 'block';
+            document.getElementById('submit').style.display = 'block';
+            document.getElementById('answer').style.display = 'block';
+        });
+        document.getElementById('Hard').addEventListener('click', function() {
+            answer2(); // Start the game with a question
+            document.body.style.backgroundImage = "url('Door.webp')";
+            document.body.style.backgroundSize = '700px';
+            document.getElementById('Easy').style.display = 'none';
+            document.getElementById('Medium').style.display = 'none';
+            document.getElementById('Hard').style.display = 'none';
+            document.getElementById('Query').style.display = 'block';
+            document.getElementById('points').style.display = 'block';
+            document.getElementById('submit').style.display = 'block';
+            document.getElementById('answer').style.display = 'block';
+        });
+        document.getElementById('reset').addEventListener('click', function() {
+           resetgame1()
+        });
+        function resetgame() {
+            document.getElementById('reset').style.display = 'block';
+            document.body.style.backgroundImage = "url('lost.png')";
+            document.body.style.backgroundSize = '1000px';
+            document.getElementById('Query').style.display = 'none';
+            document.getElementById('submit').style.display = 'none';
+            document.getElementById('points').style.display = 'none';
+            document.getElementById('answer').style.display = 'none';
+        };
+        function resetgame1() {
+            points = 0;
+            current = 0;
+            document.querySelector('#points').lastChild.nodeValue = ' ' + points;
+
+            document.body.style.backgroundImage = "url('title.png')";
+            document.body.style.backgroundSize = '1000px';
+            document.getElementById('answer').value = '';
+            document.getElementById('points').style.display = 'none';
+            document.getElementById('Easy').style.display = 'block';
+            document.getElementById('Medium').style.display = 'block';
+            document.getElementById('Hard').style.display = 'block';
+            document.getElementById('reset').style.display = 'none';
+            document.getElementById('Query').style.display = 'none';
+            document.getElementById('result').innerText = "";
+            document.getElementById('submit').style.display = 'none';
+            document.getElementById('answer').style.display = 'none';
+        };
+    </script>
+</body>
+</html>
